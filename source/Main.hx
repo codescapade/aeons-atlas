@@ -41,7 +41,7 @@ class Main {
     var pixelData = Tools.extract32(data);
     Tools.reverseBytes(pixelData);
     var header = Tools.getHeader(data);
-    var boxImage = new Image(header.width, header.height, pixelData, 2);
+    var boxImage = new Image(header.width, header.height, pixelData, true, 1);
     
     // var newImage = new Image(100, 100);
     // newImage.insertImage(boxImage, 0, 0);

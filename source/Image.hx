@@ -12,17 +12,22 @@ class Image {
 
   final stride = 4;
 
-  public function new(width: Int, height: Int, bytes: Bytes = null, extrude = 0) {
+  public function new(width: Int, height: Int, bytes: Bytes = null, trim = false, extrude = 0) {
     this.width = width;
     this.height = height;
 
+    this.bytes = Bytes.alloc(width * height * stride);
     if (bytes == null) {
-      this.bytes = Bytes.alloc(width * height * stride);
       this.bytes.fill(0, width * height * stride, 0);
-    } else if (extrude > 0) {
-      extrudeEdges(bytes, width, height, extrude);
     } else {
-      this.bytes = bytes;
+      this.bytes.blit(0, bytes, 0, bytes.length);
+      if (trim) {
+        trimTransparentPixels();
+      }
+
+      if (extrude > 0) {
+        extrudeEdges(extrude);
+      }
     }
   }
 
@@ -60,36 +65,122 @@ class Image {
     bytes.set(start + 3, color.b);
   }
 
-  function extrudeEdges(bytes: Bytes, width: Int, height: Int, amount: Int) {
-    this.width = width + amount * 2;
-    this.height = height + amount * 2;
-    var size = this.width * this.height * stride;
-    this.bytes = Bytes.alloc(size);
-    this.bytes.fill(0, stride, 0);
+  function extrudeEdges(amount: Int) {
     var original = new Image(width, height, bytes);
+
+    width += amount * 2;
+    height += amount * 2;
+    var size = width * height * stride;
+    bytes = Bytes.alloc(size);
+    bytes.fill(0, stride, 0);
     insertImage(original, amount, amount);
 
     var color = new Color(0, 0, 0, 0);
-    for (y in amount...height + amount) {
+    
+    for (y in amount...original.height + amount) {
+      // Extrude the left.
       getPixel(amount, y, color);
       for (x in 0...amount) {
         setPixel(x, y, color);
       }
-      getPixel(this.width - amount - 1, y, color);
-      for (x in this.width - amount - 1...this.width) {
+
+      // Extrude the right.
+      getPixel(width - amount - 1, y, color);
+      for (x in width - amount - 1...width) {
         setPixel(x, y, color);
       }
     }
 
-    for (x in amount...width + amount) {
+    for (x in amount...original.width + amount) {
+      // Extrude the top.
       getPixel(x, amount, color);
       for (y in 0...amount) {
         setPixel(x, y, color);
       }
-      getPixel(x, this.height - amount - 1, color);
-      for (y in this.height - amount - 1...this.height) {
+
+      // Extrude the bottom.
+      getPixel(x, height - amount - 1, color);
+      for (y in height - amount - 1...height) {
         setPixel(x, y, color);
       }
     }
+  }
+
+  function trimTransparentPixels() {
+    var temp = new Image(width, height, this.bytes);
+
+    var leftOffset = 0;
+    var rightOffset = 0;
+    var topOffset = 0;
+    var bottomOffset = 0;
+
+    for (x in 0...width) {
+      if (!isColumnEmpty(temp, x)) {
+        break;
+      }
+      leftOffset++;
+    }
+
+    var x = width - 1;
+    while (x >= 0) {
+      if (!isColumnEmpty(temp, x)) {
+        break;
+      }
+      rightOffset++;
+      x--;
+    }
+
+    for (y in 0...height) {
+      if (!isRowEmpty(temp, y)) {
+        break; 
+      }
+      topOffset++;
+    }
+
+    var y = height - 1;
+    while (y >= 0) {
+      if (!isRowEmpty(temp, y)) {
+        break;
+      }
+      bottomOffset++;
+      y--;
+    }
+
+    width = temp.width - leftOffset - rightOffset;
+    height = temp.height - topOffset - bottomOffset;
+
+    bytes = Bytes.alloc(width * height * stride);
+    var pos = 0;
+    var color = new Color(0, 0, 0, 0);
+    for (y in topOffset...topOffset + height) {
+      for (x in leftOffset...leftOffset + width) {
+        temp.getPixel(x, y, color);
+        bytes.set(pos, color.a);
+        bytes.set(pos + 1, color.r);
+        bytes.set(pos + 2, color.g);
+        bytes.set(pos + 3, color.b);
+        pos += stride;
+      }
+    }
+  }
+
+  function isColumnEmpty(image: Image, column: Int): Bool {
+    for (y in 0...image.height) {
+      if (image.getPixel(column, y).a != 0) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  function isRowEmpty(image: Image, row: Int): Bool {
+    for (x in 0...image.width) {
+      if (image.getPixel(x, row).a != 0) {
+        return false;
+      }
+    }
+
+    return true;
   }
 }
