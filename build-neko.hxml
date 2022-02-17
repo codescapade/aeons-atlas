@@ -1,0 +1,8 @@
+
+-L format
+
+-cp source
+
+--main Main
+
+-neko build/neko/AeonsAtlas.n

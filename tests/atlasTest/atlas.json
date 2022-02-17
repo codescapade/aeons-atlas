@@ -1,0 +1,14 @@
+{
+  "atlas": [
+    {
+      "name": "testAtlas",
+      "outFolder": "assets",
+      "folders": [
+
+      ],
+      "files": [
+
+      ]
+    }
+  ]
+}

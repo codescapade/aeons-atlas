@@ -1,0 +1,9 @@
+-L format
+
+-cp source
+
+--main Main
+
+--cpp build/windows
+
+-D HAXE_OUTPUT_FILE=AeonsAtlas
