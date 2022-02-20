@@ -7,6 +7,10 @@ import config.Config;
 class Atlas {
   public var finalImage: Image;
 
+  public var finalRects: Array<Rect>;
+
+  public final images = new Map<String, Image>();
+
   public function new(config: Config) {
     var imagePaths: Array<ImagePath> = [];
 
@@ -32,7 +36,6 @@ class Atlas {
       }
     }
 
-    var images = new  Map<String, Image>();
     var rects: Array<Rect> = [];
     for (path in imagePaths) {
       var name = config.folderInName ? '${path.folderName}_ ${path.fileName}' : ${path.fileName};
@@ -41,13 +44,13 @@ class Atlas {
       rects.push(new Rect(0, 0, image.width, image.height, name));
     }
 
-    var packer = new Packer(rects);
+    var packer = new Packer(rects, config.packMethod, config.maxWidth, config.maxHeight);
 
     finalImage = new Image(packer.smallestBounds.width, packer.smallestBounds.height);
     for (rect in packer.smallestLayout) {
-      var image = images[rect.name];
       finalImage.insertImage(images[rect.name], rect.x, rect.y);
     }
+    finalRects = packer.smallestLayout;
   }
 
   function getAllImagePathsFromAFolder(folder: String): Array<ImagePath> {

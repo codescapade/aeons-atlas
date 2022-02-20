@@ -2,17 +2,16 @@
   "configs": [
     {
       "name": "testAtlas",
-      "outFolder": "assets",
+      "saveFolder": "assets",
       "folders": [
-        "images"
+        "sprites"
       ],
       "files": [
-        "blue_box_new.png"
       ],
       "trimmed": true,
-      "extrude": 0,
-      "packMethod": "basic",
-      "folderInName": "true"
+      "extrude": 1,
+      "packMethod": "optimal",
+      "folderInName": "false"
     }
   ]
 }

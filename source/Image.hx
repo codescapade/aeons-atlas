@@ -11,9 +11,11 @@ class Image {
 
   public var trimmed(default, null): Bool;
 
-  public var originalWidth(default, null): Int;
+  public var extrude(default, null): Int;
 
-  public var originalHeight(default, null): Int;
+  public var sourceWidth(default, null): Int;
+
+  public var sourceHeight(default, null): Int;
 
   public var xOffset(default, null) = 0;
 
@@ -36,8 +38,10 @@ class Image {
   public function new(width: Int, height: Int, bytes: Bytes = null, trim = false, extrude = 0) {
     this.width = width;
     this.height = height;
-    this.originalWidth = width;
-    this.originalHeight = height;
+    this.sourceWidth = width;
+    this.sourceHeight = height;
+    this.trimmed = trim;
+    this.extrude = extrude;
 
     this.bytes = Bytes.alloc(width * height * stride);
     if (bytes == null) {

@@ -23,11 +23,23 @@ function setDefaultValues(data: ConfigData) {
     }
 
     if (config.packMethod == null) {
-      config.packMethod = 'optimal';
+      config.packMethod = OPTIMAL;
     }
 
     if (config.folderInName == null) {
       config.folderInName = false;
+    }
+
+    if (config.maxWidth == null) {
+      config.maxWidth = 4096;
+    }
+
+    if (config.maxHeight == null) {
+      config.maxHeight = 4096;
+    }
+
+    if (config.noData == null) {
+      config.noData = false;
     }
   }
 }

@@ -9,7 +9,7 @@ typedef Config = {
   /**
    * The folder to store the atlas in relative to the config file.
    */
-  var outFolder: String;
+  var saveFolder: String;
 
   /**
    * A list of folders with images you want to add to the atlas relative to the config file. Not recursive.
@@ -38,11 +38,26 @@ typedef Config = {
    * * optimal - The smallest atlas possible.
    * * basic - Sort alphabetically and just add them in the fastest way.
    */
-  var ?packMethod: String;
+  var ?packMethod: PackMethod;
 
   /**
    * Should the folder name be included in the name of the sprite in the data file.
    * For when you use duplicate names in separate folders.
    */
   var ?folderInName: Bool;
+
+  /**
+   * The maximum width of the atlas image in pixels.
+   */
+  var ?maxWidth: Int;
+
+  /**
+   * The maximum height of the atlas image in pixels.
+   */
+  var ?maxHeight: Int;
+
+  /**
+   * Export only the image file.
+   */
+  var ?noData: Bool;
 }

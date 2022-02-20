@@ -1,17 +1,16 @@
+import sys.FileSystem;
 import haxe.Json;
-import format.png.Reader;
 import format.png.Writer;
 import sys.io.File;
 import haxe.io.Path;
 import format.png.Tools;
-import haxe.io.Bytes;
 import config.ConfigData;
 
 class Main {
 
   static function main() {
     final args = Sys.args();
-    final configPath = args.length > 0 ? args[0] : 'atlas.json';
+    final configPath = args.length > 0 ? Path.join([args[0], 'atlas.json']) : 'atlas.json';
     final path = Path.join([Sys.getCwd(), configPath]);
 
     final p = new Path(path);
@@ -23,60 +22,74 @@ class Main {
 
     for (config in configData.configs) {
       var atlas = new Atlas(config);
-      var bytes = atlas.finalImage.getPixels();
-      var saveData = Tools.build32ARGB(atlas.finalImage.width, atlas.finalImage.height, bytes);
-      var path = Path.join([Sys.getCwd(), 'test.png']);
-      var file = File.write(path);
-      var writer = new Writer(file);
-      writer.write(saveData);
-      file.close();
-    }
+      var saveFolder = Path.join([Sys.getCwd(), config.saveFolder]);
+      if (!FileSystem.exists(saveFolder)) {
+        FileSystem.createDirectory(saveFolder);
+      }
+      saveAtlasImage(config.name, saveFolder, atlas);
 
-    // readImage();
+      if (!config.noData) {
+        saveJsonData(config.name, saveFolder, atlas);
+      }
+    }
   }
 
-  static function saveRedBlock() {
-    final width = 32;
-    final height = 32;
-    
-    final pixels = width * height;
-    var bytes = Bytes.alloc(pixels * 4);
-
-    // Make it argb.
-    for (i in 0...pixels) {
-      bytes.set(i * 4, 255);
-      bytes.set(i * 4 + 1, 255);
-      bytes.set(i * 4 + 2, 0);
-      bytes.set(i * 4 + 3, 0);
-    }
-
-    var data = Tools.build32ARGB(width, height, bytes);
-    var path = Path.join([Sys.getCwd(), 'test.png']);
-    var file = File.write(path);
-    var writer = new Writer(file);
-    writer.write(data);
-    file.close();
-  }
-
-  static function readImage(): Void {
-    var file = File.read(Path.join([Sys.getCwd(), 'blue_box.png']));
-    var data = new Reader(file).read();
-    var pixelData = Tools.extract32(data);
-    Tools.reverseBytes(pixelData);
-    var header = Tools.getHeader(data);
-    var boxImage = new Image(header.width, header.height, pixelData, true, 1);
-    
-    // var newImage = new Image(100, 100);
-    // newImage.insertImage(boxImage, 0, 0);
-
-    // var bytes = newImage.getPixels();
-    // var saveData = Tools.build32ARGB(newImage.width, newImage.height, bytes);
-    var bytes = boxImage.getPixels();
-    var saveData = Tools.build32ARGB(boxImage.width, boxImage.height, bytes);
-    var path = Path.join([Sys.getCwd(), 'test.png']);
+  static function saveAtlasImage(name: String, saveFolder: String, atlas: Atlas) {
+    var bytes = atlas.finalImage.getPixels();
+    var saveData = Tools.build32ARGB(atlas.finalImage.width, atlas.finalImage.height, bytes);
+    var path = Path.join([saveFolder, '${name}.png']);
     var file = File.write(path);
     var writer = new Writer(file);
     writer.write(saveData);
     file.close();
   }
+
+  static function saveJsonData(name: String, saveFolder: String, atlas: Atlas) {
+    var frames: Array<Frame> = [];
+    for (rect in atlas.finalRects) {
+      var image = atlas.images[rect.name];
+      frames.push({
+        filename: rect.name,
+        frame: {
+          x: rect.x + image.extrude,
+          y: rect.y + image.extrude,
+          w: rect.width - image.extrude * 2,
+          h: rect.height - image.extrude * 2
+        },
+        rotated: false,
+        trimmed: image.trimmed,
+        spriteSourceSize: {
+          x: 0,
+          y: 0,
+          w: image.sourceWidth,
+          h: image.sourceHeight
+        },
+        sourceSize: {
+          w: image.sourceWidth,
+          h: image.sourceHeight
+        }
+      });
+    }
+
+    var data: JsonData = {
+      frames: frames
+    };
+
+    var path = Path.join([saveFolder, '${name}.json']);
+    var content = Json.stringify(data, '  ');
+    File.saveContent(path, content);
+  }
+}
+
+typedef JsonData = {
+  var frames: Array<Frame>;
+}
+
+typedef Frame = {
+  var filename: String;
+  var frame: { x: Int, y: Int, w: Int, h: Int };
+  var rotated: Bool;
+  var trimmed: Bool;
+  var spriteSourceSize: { x: Int, y: Int, w: Int, h: Int };
+  var sourceSize: { w: Int, h: Int };
 }
