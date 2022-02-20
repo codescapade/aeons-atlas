@@ -1,14 +1,18 @@
 {
-  "atlas": [
+  "configs": [
     {
       "name": "testAtlas",
       "outFolder": "assets",
       "folders": [
-
+        "images"
       ],
       "files": [
-
-      ]
+        "blue_box_new.png"
+      ],
+      "trimmed": true,
+      "extrude": 0,
+      "packMethod": "basic",
+      "folderInName": "true"
     }
   ]
 }

@@ -1,14 +1,38 @@
+import haxe.Json;
 import format.png.Reader;
 import format.png.Writer;
 import sys.io.File;
 import haxe.io.Path;
 import format.png.Tools;
 import haxe.io.Bytes;
+import config.ConfigData;
 
 class Main {
 
   static function main() {
-    readImage();
+    final args = Sys.args();
+    final configPath = args.length > 0 ? args[0] : 'atlas.json';
+    final path = Path.join([Sys.getCwd(), configPath]);
+
+    final p = new Path(path);
+    Sys.setCwd(p.dir);
+
+    final jsonString = File.getContent(path);
+    final configData: ConfigData = Json.parse(jsonString);
+    setDefaultValues(configData);
+
+    for (config in configData.configs) {
+      var atlas = new Atlas(config);
+      var bytes = atlas.finalImage.getPixels();
+      var saveData = Tools.build32ARGB(atlas.finalImage.width, atlas.finalImage.height, bytes);
+      var path = Path.join([Sys.getCwd(), 'test.png']);
+      var file = File.write(path);
+      var writer = new Writer(file);
+      writer.write(saveData);
+      file.close();
+    }
+
+    // readImage();
   }
 
   static function saveRedBlock() {
@@ -32,7 +56,6 @@ class Main {
     var writer = new Writer(file);
     writer.write(data);
     file.close();
-
   }
 
   static function readImage(): Void {

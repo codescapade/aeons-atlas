@@ -1,5 +1,6 @@
 package;
 
+import sys.io.File;
 import haxe.io.Bytes;
 
 class Image {
@@ -8,13 +9,35 @@ class Image {
 
   public var height(default, null): Int;
 
+  public var trimmed(default, null): Bool;
+
+  public var originalWidth(default, null): Int;
+
+  public var originalHeight(default, null): Int;
+
+  public var xOffset(default, null) = 0;
+
+  public  var yOffset(default, null) = 0;
+
   var bytes: Bytes;
 
   final stride = 4;
 
+  public static function fromFile(path: String, trim: Bool, extrude: Int): Image {
+    var file = File.read(path);
+    var data = new format.png.Reader(file).read();
+    var pixelData = format.png.Tools.extract32(data);
+    format.png.Tools.reverseBytes(pixelData);
+    var header = format.png.Tools.getHeader(data);
+
+    return new Image(header.width, header.height, pixelData, trim, extrude);
+  }
+
   public function new(width: Int, height: Int, bytes: Bytes = null, trim = false, extrude = 0) {
     this.width = width;
     this.height = height;
+    this.originalWidth = width;
+    this.originalHeight = height;
 
     this.bytes = Bytes.alloc(width * height * stride);
     if (bytes == null) {
@@ -43,18 +66,10 @@ class Image {
     return bytes;
   }
 
-  public function getPixel(x: Int, y: Int, ?out: Color): Color {
-    if (out == null) {
-      out = new Color(0, 0, 0, 0);
-    }
-
+  public function getPixel(x: Int, y: Int): Color {
     var start = (y * width + x) * stride;
-    out.a = bytes.get(start);
-    out.r = bytes.get(start + 1);
-    out.g = bytes.get(start + 2);
-    out.b = bytes.get(start + 3);
 
-    return out;
+    return return new Color(bytes.get(start), bytes.get(start + 1), bytes.get(start + 2), bytes.get(start + 3));
   }
 
   public function setPixel(x: Int, y: Int, color: Color) {
@@ -74,18 +89,16 @@ class Image {
     bytes = Bytes.alloc(size);
     bytes.fill(0, stride, 0);
     insertImage(original, amount, amount);
-
-    var color = new Color(0, 0, 0, 0);
-    
+    var color: Color;
     for (y in amount...original.height + amount) {
       // Extrude the left.
-      getPixel(amount, y, color);
+      color = getPixel(amount, y);
       for (x in 0...amount) {
         setPixel(x, y, color);
       }
 
       // Extrude the right.
-      getPixel(width - amount - 1, y, color);
+      color = getPixel(width - amount - 1, y);
       for (x in width - amount - 1...width) {
         setPixel(x, y, color);
       }
@@ -93,13 +106,13 @@ class Image {
 
     for (x in amount...original.width + amount) {
       // Extrude the top.
-      getPixel(x, amount, color);
+      color = getPixel(x, amount);
       for (y in 0...amount) {
         setPixel(x, y, color);
       }
 
       // Extrude the bottom.
-      getPixel(x, height - amount - 1, color);
+      color = getPixel(x, height - amount - 1);
       for (y in height - amount - 1...height) {
         setPixel(x, y, color);
       }
@@ -146,15 +159,17 @@ class Image {
       y--;
     }
 
+    xOffset = leftOffset;
+    yOffset = topOffset;
     width = temp.width - leftOffset - rightOffset;
     height = temp.height - topOffset - bottomOffset;
 
     bytes = Bytes.alloc(width * height * stride);
     var pos = 0;
-    var color = new Color(0, 0, 0, 0);
+    var color: Color;
     for (y in topOffset...topOffset + height) {
       for (x in leftOffset...leftOffset + width) {
-        temp.getPixel(x, y, color);
+        color = temp.getPixel(x, y);
         bytes.set(pos, color.a);
         bytes.set(pos + 1, color.r);
         bytes.set(pos + 2, color.g);
