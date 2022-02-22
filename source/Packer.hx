@@ -2,35 +2,105 @@ package;
 
 /**
  * Pack rectangles in bounds.
- * Optimized option is based on this post.
+ * The optimal option is based on this post.
  * https://www.codeproject.com/Articles/210979/Fast-optimizing-rectangle-packing-algorithm-for-bu
+ * 
+ * Sort the rectangles by height, heighest first.
+ * 
+ * Make the bounds the width of the total width of all rectangles and the height the height of the highest rectangle.
+ * 
+ * There is a dynamic grid with booleans of where the placed rectangles are.
+ * 
+ * There is a separate array with all column widths and one with a row heights in the grid.
+ * 
+ * Each rectangle is inserted at the left most possible position.
+ * 
+ * The grid column and row that overlap the ends of the inserted rectangle get divided by the space left empty.
+ * 
+ * This is repeated until all rectangles are placed or one doesn't fit.
+ * 
+ * If one doesn't fit, increase the height of the bounds by the height of the rectangle that didn't fit and restart
+ * the process.
+ * 
+ * If all fit make the bounds width smaller until it fits the rectangle exactly. If the area of the bounds this pass
+ * is smaller that the current smallest bounds save it and the rectangle positions.
+ * 
+ * Subtract 1 pixels from the bounds width. if it is smaller than the width of the widest rectangle the process is
+ * done. If not restart the process with the new bounds.
  */
 class Packer {
+  /**
+   * All rectangles that need to be packed.
+   */
   var rects: Array<Rect>;
 
+  /**
+   * The current bounds of the packer image.
+   */
   var bounds: Rect;
 
+  /**
+   * A list of rectangles that have been placed on this pass.
+   */
   var placedRects: Array<Rect> = [];
 
+  /**
+   * A list of row sizes for the dynamic grid in pixels.
+   */
   var gridRows: Array<Int> = [];
+
+  /**
+   * A list of column sizes for the dynamci grid in pixels.
+   */
   var gridColumns: Array<Int> = [];
 
+  /**
+   * Dynamic grid that has the filled and empty positions in the grid.
+   */
   var grid: Array<Array<Bool>> = [];
 
+  /**
+   * The number of placed rectangles in the grid.
+   */
   var placed = 0;
 
+  /**
+   * The current smallest bounds of the packed rectangles.
+   */
   public var smallestBounds: Rect;
 
+  /**
+   * The layout of rectangles for the smallest bounds.
+   */
   public var smallestLayout: Array<Rect> = [];
 
+  /**
+   * The width of the widest rectangle.
+   */
   var biggestWidth = 0;
 
+  /**
+   * The maximum width the bounds can be.
+   */
   var maxWidth: Int;
 
+  /**
+   * The maximum height the bounds can be.
+   */
   var maxHeight: Int;
 
+  /**
+   * Simple or optimal packing method depending on the atlas config.
+   */
   var packMethod: PackMethod;
 
+  /**
+   * Constructor.
+   * @param rects The rectangles to pack in the atlas.
+   * @param packMethod The method to use for the packing.
+   * @param maxWidth The maximum width of the atlas in pixels.
+   * @param maxHeight The maximum height of the atlas in pixels.
+   */
   public function new(rects: Array<Rect>, packMethod: PackMethod, maxWidth: Int, maxHeight: Int) {
     this.rects = rects;
     this.packMethod = packMethod;
@@ -43,6 +113,9 @@ class Packer {
     pack();
   }
 
+  /**
+   * Set the bounds for the first pass.
+   */
   function setStartBounds() {
     var boundsWidth = 0;
     var boundsHeight = 0;
@@ -63,10 +136,13 @@ class Packer {
     bounds = new Rect(0, 0, boundsWidth, boundsHeight);
   }
 
+  /**
+   * Pack the rectangles.
+   */
   function pack() {
     if (packMethod == BASIC) {
       if (!packRectangles()) {
-        trace('Unable to fit the images inside the bounds.');
+        Sys.println('Unable to fit the images inside the bounds.');
       }
     } else {
       var done = false;
@@ -75,12 +151,12 @@ class Packer {
           bounds.width -= 1;
           if (bounds.width < biggestWidth) {
             done = true;
-            trace('packing complete.');
+            Sys.println('packing complete.');
           }
           resetPlacements();
         } else {
           if (smallestBounds == null) {
-            trace('unable to fit the images inside the bounds.');
+            Sys.println('unable to fit the images inside the bounds.');
           }
           done = true;
         }
@@ -88,6 +164,10 @@ class Packer {
     }
   }
 
+  /**
+   * Run a packing pass.
+   * @return True if all rectangles fit.
+   */
   function packRectangles(): Bool {
     while (placed < rects.length) {
       var rect = rects[placed];
@@ -103,6 +183,7 @@ class Packer {
       }
     }
 
+    // Find the width of of the packed rectangles to decrease the bounds width.
     var totalWidth = 0;
     for (x in 0...gridColumns.length) {
       for (y in 0...gridRows.length) {
@@ -113,6 +194,7 @@ class Packer {
       }
     }
 
+    // Update the smallest bounds.
     bounds.width = totalWidth;
     if (smallestBounds == null || bounds.area() < smallestBounds.area()) {
       smallestBounds = bounds.clone();
@@ -121,10 +203,13 @@ class Packer {
         smallestLayout.push(rect.clone());
       }
     }
-    
+
     return true;
   }
 
+  /**
+   * Reset for a new pass.
+   */
   function resetPlacements() {
       placedRects = [];
       placed = 0;
@@ -140,6 +225,7 @@ class Packer {
    */
   function placeRect(rect: Rect): Bool {
     if (packMethod == BASIC) {
+      // Find top most empty spot.
       for (row in 0...gridRows.length) {
         for (column in 0...gridColumns.length) {
           if (!grid[row][column]) {
@@ -150,6 +236,7 @@ class Packer {
         }
       }
     } else {
+      // Find left most empty spot.
       for (column in 0...gridColumns.length) {
         for (row in 0...gridRows.length) {
           if (!grid[row][column]) {
@@ -163,7 +250,6 @@ class Packer {
 
     return false;
   }
-
 
   /**
    * Find an empty spot for the rectangle as much left as possible.
@@ -238,16 +324,19 @@ class Packer {
    * @param endRow The end row index.
    * @param rect The rectangle to insert.
    */
-  function insertRect(totalWidth: Int, totalHeight: Int, startColumn: Int, startRow: Int, endColumn: Int, endRow: Int, rect: Rect) {
-    var widthLeft = totalWidth - rect.width;
-    var heightLeft = totalHeight - rect.height;
+  function insertRect(totalWidth: Int, totalHeight: Int, startColumn: Int, startRow: Int, endColumn: Int,
+      endRow: Int, rect: Rect) {
+    final widthLeft = totalWidth - rect.width;
+    final heightLeft = totalHeight - rect.height;
 
+    // Divide the grid row that contains the last part of the new rect.
     if (heightLeft > 0) {
       gridRows[endRow] = gridRows[endRow] - heightLeft;
       gridRows.insert(endRow + 1, heightLeft);
       insertRow(endRow + 1);
     }
 
+    // Divide the grid column that contains the last part of the new rect.
     if (widthLeft > 0) {
       gridColumns[endColumn] = gridColumns[endColumn] - widthLeft;
       gridColumns.insert(endColumn + 1, widthLeft);

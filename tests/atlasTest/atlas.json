@@ -4,14 +4,14 @@
       "name": "testAtlas",
       "saveFolder": "assets",
       "folders": [
-        "sprites"
+        "images"
       ],
       "files": [
       ],
       "trimmed": true,
       "extrude": 1,
       "packMethod": "optimal",
-      "folderInName": "false"
+      "folderInName": true 
     }
   ]
 }

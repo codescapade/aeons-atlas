@@ -1,95 +1,94 @@
-import sys.FileSystem;
 import haxe.Json;
-import format.png.Writer;
-import sys.io.File;
 import haxe.io.Path;
-import format.png.Tools;
-import config.ConfigData;
+import sys.FileSystem;
+import sys.io.File;
 
 class Main {
 
   static function main() {
+    // The program can take an optional folder that contains an atlas.json.
     final args = Sys.args();
     final configPath = args.length > 0 ? Path.join([args[0], 'atlas.json']) : 'atlas.json';
-    final path = Path.join([Sys.getCwd(), configPath]);
+    final fullPath = Path.join([Sys.getCwd(), configPath]);
 
-    final p = new Path(path);
-    Sys.setCwd(p.dir);
+    // Set the working directory to the atlas.json folder to make it easier to get relative paths for the images.
+    Sys.setCwd(Path.directory(fullPath));
 
-    final jsonString = File.getContent(path);
+    // Load the atlas.json config data.
+    final jsonString = File.getContent(fullPath);
     final configData: ConfigData = Json.parse(jsonString);
-    setDefaultValues(configData);
+    setDefaultConfigValues(configData);
 
+    // Create the atlases for each config in the file.
     for (config in configData.configs) {
-      var atlas = new Atlas(config);
-      var saveFolder = Path.join([Sys.getCwd(), config.saveFolder]);
+      final atlas = new Atlas(config);
+
+      if (!atlas.pack()) {
+        Sys.println('Unable to pack the atlas.');
+      }
+
+      // Create the save folder if it does not exist.
+      final saveFolder = Path.join([Sys.getCwd(), config.saveFolder]);
       if (!FileSystem.exists(saveFolder)) {
         FileSystem.createDirectory(saveFolder);
       }
-      saveAtlasImage(config.name, saveFolder, atlas);
+
+      Save.atlasImage(config.name, saveFolder, atlas);
 
       if (!config.noData) {
-        saveJsonData(config.name, saveFolder, atlas);
+        Save.jsonData(config.name, saveFolder, atlas);
       }
     }
   }
 
-  static function saveAtlasImage(name: String, saveFolder: String, atlas: Atlas) {
-    var bytes = atlas.finalImage.getPixels();
-    var saveData = Tools.build32ARGB(atlas.finalImage.width, atlas.finalImage.height, bytes);
-    var path = Path.join([saveFolder, '${name}.png']);
-    var file = File.write(path);
-    var writer = new Writer(file);
-    writer.write(saveData);
-    file.close();
-  }
+  /**
+   * Set default values for each config for the optional fields if they are null.
+   * @param data All configs.
+   */
+  static function setDefaultConfigValues(data: ConfigData) {
+    for (config in data.configs) {
+      if (config.folders == null) {
+        config.folders = [];
+      }
 
-  static function saveJsonData(name: String, saveFolder: String, atlas: Atlas) {
-    var frames: Array<Frame> = [];
-    for (rect in atlas.finalRects) {
-      var image = atlas.images[rect.name];
-      frames.push({
-        filename: rect.name,
-        frame: {
-          x: rect.x + image.extrude,
-          y: rect.y + image.extrude,
-          w: rect.width - image.extrude * 2,
-          h: rect.height - image.extrude * 2
-        },
-        rotated: false,
-        trimmed: image.trimmed,
-        spriteSourceSize: {
-          x: 0,
-          y: 0,
-          w: image.sourceWidth,
-          h: image.sourceHeight
-        },
-        sourceSize: {
-          w: image.sourceWidth,
-          h: image.sourceHeight
-        }
-      });
+      if (config.files == null) {
+        config.files = [];
+      }
+
+      if (config.trimmed == null) {
+        config.trimmed = true;
+      }
+
+      if (config.extrude == null) {
+        config.extrude = 1;
+      }
+
+      if (config.packMethod == null) {
+        config.packMethod = OPTIMAL;
+      }
+
+      if (config.folderInName == null) {
+        config.folderInName = false;
+      }
+
+      if (config.maxWidth == null) {
+        config.maxWidth = 4096;
+      }
+
+      if (config.maxHeight == null) {
+        config.maxHeight = 4096;
+      }
+
+      if (config.noData == null) {
+        config.noData = false;
+      }
     }
-
-    var data: JsonData = {
-      frames: frames
-    };
-
-    var path = Path.join([saveFolder, '${name}.json']);
-    var content = Json.stringify(data, '  ');
-    File.saveContent(path, content);
   }
 }
 
-typedef JsonData = {
-  var frames: Array<Frame>;
-}
-
-typedef Frame = {
-  var filename: String;
-  var frame: { x: Int, y: Int, w: Int, h: Int };
-  var rotated: Bool;
-  var trimmed: Bool;
-  var spriteSourceSize: { x: Int, y: Int, w: Int, h: Int };
-  var sourceSize: { w: Int, h: Int };
+/**
+ * Helper to load the configs from the json file.
+ */
+typedef ConfigData = {
+  var configs: Array<Config>;
 }

@@ -1,4 +1,4 @@
-package config;
+package;
 
 typedef Config = {
   /**
@@ -35,8 +35,8 @@ typedef Config = {
   /**
    * The method to use for packing the sprites.
    * Options:
-   * * optimal - The smallest atlas possible.
-   * * basic - Sort alphabetically and just add them in the fastest way.
+   * - optimal - The smallest atlas possible.
+   * - basic - Sort alphabetically and just add them in the fastest way.
    */
   var ?packMethod: PackMethod;
 
