@@ -6,4 +6,6 @@
 
 --cpp build/windows
 
+--dce full
+
 -D HAXE_OUTPUT_FILE=AeonsAtlas
