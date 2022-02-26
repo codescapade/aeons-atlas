@@ -1,4 +1,4 @@
-package;
+package atlas;
 
 import haxe.io.Path;
 import sys.FileSystem;
@@ -23,6 +23,11 @@ class Atlas {
   public final images = new Map<String, Image>();
 
   /**
+   * The start rectangles.
+   */
+  public var rects(default, null): Array<Rect>;
+
+  /**
    * The file paths to the images.
    */
   var imagePaths: Array<ImagePath> = [];
@@ -33,18 +38,17 @@ class Atlas {
   var config: Config;
 
   /**
+   * Used to don't pack if the constructor found issues.
+   */
+  var errorFound = false;
+
+  /**
    * Constructor.
    * @param config Atlas config.
    */
   public function new(config: Config) {
     this.config = config;
-  }
 
-  /**
-   * Pack the images into one image.
-   * @return True if the packing was successful.
-   */
-  public function pack(): Bool {
     // Get all the png images from the folders in the config. This is not recursive.
     if (config.folders != null) {
       for (folder in config.folders) {
@@ -53,8 +57,9 @@ class Atlas {
           final paths = getAllImagePathsFromAFolder(fullPath);
           imagePaths = imagePaths.concat(paths);
         } else {
-          Sys.println('folder ${fullPath} does not exist');
-          return false;
+          Sys.println('Error: folder ${fullPath} does not exist.');
+          errorFound = true;
+          return;
         }
       }
     }
@@ -73,7 +78,7 @@ class Atlas {
     var duplicates = false;
 
     final names: Array<String> = [];
-    final rects: Array<Rect> = [];
+    rects = [];
     for (path in imagePaths) {
       final name = config.folderInName ? '${path.folderName}_${path.fileName}' : ${path.fileName};
 
@@ -82,7 +87,7 @@ class Atlas {
         names.push(name);
       } else {
         duplicates = true;
-        Sys.println('"${name}" already exists. Cannot have duplicate names.');
+        Sys.println('Error: "${name}" already exists. Cannot have duplicate names.');
       }
 
       // Load the image and create the rectangle.
@@ -93,13 +98,26 @@ class Atlas {
 
     if (duplicates) {
       if (!config.folderInName) {
-        Sys.println('Duplicate image names found. Try using the "folderInName" config option.');
+        Sys.println('Error: Duplicate image names found. Try using the "folderInName" config option.');
       }
+      errorFound = true;
+    }
+  }
+
+  /**
+   * Pack the images into one image.
+   * @return True if the packing was successful.
+   */
+  public function pack(): Bool {
+    if (errorFound) {
       return false;
     }
 
     // This does the actual packing.
     final packer = new Packer(rects, config.packMethod, config.maxWidth, config.maxHeight);
+    if (!packer.pack()) {
+      return false;
+    }
 
     // Create the final blank image with the correct size.
     packedImage = new Image(packer.smallestBounds.width, packer.smallestBounds.height);
@@ -109,6 +127,10 @@ class Atlas {
       packedImage.insertImage(images[rect.name], rect.x, rect.y);
     }
     packedRects = packer.smallestLayout;
+
+    #if !unit_testing
+    Sys.println('Atlas "${config.name}" has been packed.');
+    #end
 
     return true;
   }

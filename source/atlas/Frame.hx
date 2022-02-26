@@ -1,4 +1,4 @@
-package;
+package atlas;
 
 /**
  * This is a frame in the json data.

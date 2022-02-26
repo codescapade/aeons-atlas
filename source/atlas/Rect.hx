@@ -1,4 +1,4 @@
-package;
+package atlas;
 
 /**
  * Rectangle class.

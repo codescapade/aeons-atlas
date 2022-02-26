@@ -1,0 +1,70 @@
+{
+  "configs": [
+    {
+      "name": "basic",
+      "saveFolder": "output/01_basic",
+      "folders": [
+        "images"
+      ],
+      "trimmed": false,
+      "extrude": 0,
+      "packMethod": "basic"
+    },
+    {
+      "name": "basic_folder_name_in_filename",
+      "saveFolder": "output/02_basic_folder_name_in_filename",
+      "folders": [
+        "images"
+      ],
+      "trimmed": false,
+      "extrude": 0,
+      "packMethod": "basic",
+      "folderInName":true 
+    },
+    {
+      "name": "basic_trimmed",
+      "saveFolder": "output/03_basic_trimmed",
+      "folders": [
+        "images"
+      ],
+      "trimmed": true,
+      "extrude": 0,
+      "packMethod": "basic"
+    },
+    {
+      "name": "optimal",
+      "saveFolder": "output/04_optimal",
+      "folders": [
+        "images"
+      ],
+      "trimmed": false,
+      "extrude": 0,
+      "packMethod": "optimal"
+    },
+    {
+      "name": "optimal_trimmed",
+      "saveFolder": "output/05_optimal_trimmed",
+      "folders": [
+        "images"
+      ],
+      "trimmed": true,
+      "extrude": 0,
+      "packMethod": "optimal"
+    },
+    {
+      "name": "optimal_trimmed_extruded",
+      "saveFolder": "output/06_optimal_trimmed_extruded",
+      "files": [
+        "images/blue_box.png",
+        "images/green_box.png",
+        "images/orange_box.png",
+        "images/purple_box.png",
+        "images/red_box.png",
+        "images/yellow_box.png"
+      ],
+      "trimmed": true,
+      "extrude": 1,
+      "packMethod": "optimal"
+    }
+  ]
+}

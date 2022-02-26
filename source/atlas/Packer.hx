@@ -1,4 +1,4 @@
-package;
+package atlas;
 
 /**
  * Pack rectangles in bounds.
@@ -110,7 +110,44 @@ class Packer {
     sortRects();
     setStartBounds();
     resetPlacements();
-    pack();
+  }
+
+  /**
+   * Pack the rectangles.
+   */
+  public function pack(): Bool {
+    if (packMethod == BASIC) {
+      if (!packRectangles()) {
+        #if !unit_testing
+        Sys.println('Error: Unable to fit the images inside the bounds.');
+        #end
+        return false;
+      }
+      return true;
+    } else {
+      var success = true;
+      var done = false;
+      while (!done) {
+        if (packRectangles()) {
+          bounds.width -= 1;
+          if (bounds.width < biggestWidth) {
+            done = true;
+          } else {
+            resetPlacements();
+          }
+        } else {
+          if (smallestBounds == null) {
+            #if !unit_testing
+            Sys.println('Error: Unable to fit the images inside the bounds.');
+            #end
+            success = false;
+          }
+          done = true;
+        }
+      }
+
+      return success;
+    }
   }
 
   /**
@@ -120,7 +157,7 @@ class Packer {
     var boundsWidth = 0;
     var boundsHeight = 0;
     for (rect in rects) {
-      if (boundsHeight == 0 || rect.height < boundsHeight) {
+      if (boundsHeight == 0 || rect.height > boundsHeight) {
         boundsHeight = rect.height;
       }
       boundsWidth += rect.width;
@@ -134,34 +171,6 @@ class Packer {
     }
 
     bounds = new Rect(0, 0, boundsWidth, boundsHeight);
-  }
-
-  /**
-   * Pack the rectangles.
-   */
-  function pack() {
-    if (packMethod == BASIC) {
-      if (!packRectangles()) {
-        Sys.println('Unable to fit the images inside the bounds.');
-      }
-    } else {
-      var done = false;
-      while (!done) {
-        if (packRectangles()) {
-          bounds.width -= 1;
-          if (bounds.width < biggestWidth) {
-            done = true;
-            Sys.println('packing complete.');
-          }
-          resetPlacements();
-        } else {
-          if (smallestBounds == null) {
-            Sys.println('unable to fit the images inside the bounds.');
-          }
-          done = true;
-        }
-      }
-    }
   }
 
   /**

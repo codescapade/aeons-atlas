@@ -1,7 +1,7 @@
--L format:3.5.0
+-lib format:3.5.0
 
 -cp source
 
 --main Main
 
--neko build/neko/AeonsAtlas.n
+-neko build/neko/aeonsAtlas.n

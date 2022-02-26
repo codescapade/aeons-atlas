@@ -1,3 +1,4 @@
+package atlas;
 
 /**
  * ARGB color class to make working with pixels easier.
@@ -35,5 +36,14 @@ class Color {
     this.r = r;
     this.g = g;
     this.b = b;
+  }
+
+  /**
+   * Check if another color is the same as this.
+   * @param other The color to compare to.
+   * @return Bool
+   */
+  public function equals(other: Color): Bool {
+    return a == other.a && r == other.r && g == other.g && b == other.b;
   }
 }

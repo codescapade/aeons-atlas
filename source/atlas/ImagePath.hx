@@ -1,4 +1,4 @@
-package;
+package atlas;
 
 /**
  * Helper type that stores the direct parent folder name,

@@ -1,4 +1,4 @@
-package;
+package atlas;
 
 import haxe.Json;
 import haxe.io.Path;

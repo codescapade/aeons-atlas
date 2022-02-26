@@ -1,0 +1,130 @@
+{
+  "frames": [
+    {
+      "rotated": false,
+      "sourceSize": {
+        "h": 90,
+        "w": 70
+      },
+      "filename": "green_box",
+      "spriteSourceSize": {
+        "h": 90,
+        "w": 70,
+        "x": 0,
+        "y": 0
+      },
+      "frame": {
+        "h": 72,
+        "w": 36,
+        "x": 0,
+        "y": 0
+      },
+      "trimmed": true
+    },
+    {
+      "rotated": false,
+      "sourceSize": {
+        "h": 72,
+        "w": 54
+      },
+      "filename": "orange_box",
+      "spriteSourceSize": {
+        "h": 72,
+        "w": 54,
+        "x": 0,
+        "y": 0
+      },
+      "frame": {
+        "h": 64,
+        "w": 18,
+        "x": 36,
+        "y": 0
+      },
+      "trimmed": true
+    },
+    {
+      "rotated": false,
+      "sourceSize": {
+        "h": 100,
+        "w": 86
+      },
+      "filename": "yellow_box",
+      "spriteSourceSize": {
+        "h": 100,
+        "w": 86,
+        "x": 0,
+        "y": 0
+      },
+      "frame": {
+        "h": 52,
+        "w": 72,
+        "x": 36,
+        "y": 64
+      },
+      "trimmed": true
+    },
+    {
+      "rotated": false,
+      "sourceSize": {
+        "h": 64,
+        "w": 96
+      },
+      "filename": "red_box",
+      "spriteSourceSize": {
+        "h": 64,
+        "w": 96,
+        "x": 0,
+        "y": 0
+      },
+      "frame": {
+        "h": 48,
+        "w": 72,
+        "x": 54,
+        "y": 0
+      },
+      "trimmed": true
+    },
+    {
+      "rotated": false,
+      "sourceSize": {
+        "h": 46,
+        "w": 48
+      },
+      "filename": "blue_box",
+      "spriteSourceSize": {
+        "h": 46,
+        "w": 48,
+        "x": 0,
+        "y": 0
+      },
+      "frame": {
+        "h": 36,
+        "w": 36,
+        "x": 0,
+        "y": 72
+      },
+      "trimmed": true
+    },
+    {
+      "rotated": false,
+      "sourceSize": {
+        "h": 34,
+        "w": 66
+      },
+      "filename": "purple_box",
+      "spriteSourceSize": {
+        "h": 34,
+        "w": 66,
+        "x": 0,
+        "y": 0
+      },
+      "frame": {
+        "h": 12,
+        "w": 48,
+        "x": 54,
+        "y": 48
+      },
+      "trimmed": true
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-package;
+package atlas;
 
 import haxe.io.Bytes;
 import sys.io.File;
@@ -123,7 +123,7 @@ class Image {
    * @param y The y position in pixels.
    * @return The pixel color.
    */
-  function getPixel(x: Int, y: Int): Color {
+  public function getPixel(x: Int, y: Int): Color {
     var start = (y * width + x) * stride;
 
     return return new Color(bytes.get(start), bytes.get(start + 1), bytes.get(start + 2), bytes.get(start + 3));
@@ -135,7 +135,7 @@ class Image {
    * @param y The y position in pixels.
    * @param color The color to set.
    */
-  function setPixel(x: Int, y: Int, color: Color) {
+  public function setPixel(x: Int, y: Int, color: Color) {
     var start = (y * width + x) * stride;
     bytes.set(start, color.a);
     bytes.set(start + 1, color.r);
