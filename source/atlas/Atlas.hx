@@ -75,6 +75,12 @@ class Atlas {
       }
     }
 
+    if (imagePaths.length == 0) {
+      errorFound = true;
+      Sys.println('No images to pack.');
+      return;
+    }
+
     var duplicates = false;
 
     final names: Array<String> = [];

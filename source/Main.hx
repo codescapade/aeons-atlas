@@ -30,7 +30,8 @@ class Main {
       final atlas = new Atlas(config);
 
       if (!atlas.pack()) {
-        Sys.println('Unable to pack the atlas.');
+        Sys.println('Unable to pack atlas ${config.name}.');
+        continue;
       }
 
       // Create the save folder if it does not exist.
