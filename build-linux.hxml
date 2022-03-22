@@ -1,0 +1,11 @@
+-L format:3.5.0
+
+-cp source
+
+--main Main
+
+--cpp build/linux
+
+--dce full
+
+-D HAXE_OUTPUT_FILE=AeonsAtlas
