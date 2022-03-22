@@ -21,7 +21,7 @@ jobs:
           haxelib install buddy 2.13.0 --quiet
 
       - name: Run Tests
-      - run: haxe tests.hxml
+        run: haxe tests.hxml
 
 
 
