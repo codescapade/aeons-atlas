@@ -1,0 +1,43 @@
+name: CI
+on: [push, pull_request]
+
+jobs:
+
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.2.5
+
+      - name: Set HAXEPATH
+        run: echo "HAXEPATH=$Env:HAXE_STD_PATH\.." >> $Env:GITHUB_ENV
+
+      - name: Install Haxe dependencies
+        run: |
+          haxelib install format 3.5.0 --quiet
+          haxelib install buddy 2.13.0 --quiet
+
+      - name: Run Tests
+      - run haxe tests.hxml
+
+
+
+  # build-windows:
+  #   runs-on: windows-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+
+  #     - uses: krdlab/setup-haxe@v1
+  #       with:
+  #         haxe-version: 4.2.5
+
+  #     - name: Set HAXEPATH
+  #       run: |
+  #         echo "HAXEPATH=$Env:HAXE_STD_PATH\.." >> $Env:GITHUB_ENV
+  #     - name: Install Haxe dependencies
+  #       run: |
+  #         haxelib install hxcpp --quiet
+  #         haxelib install format --quiet
