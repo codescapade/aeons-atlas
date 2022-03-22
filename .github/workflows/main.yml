@@ -25,19 +25,28 @@ jobs:
 
 
 
-  # build-windows:
-  #   runs-on: windows-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
 
-  #     - uses: krdlab/setup-haxe@v1
-  #       with:
-  #         haxe-version: 4.2.5
+      - uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.2.5
 
-  #     - name: Set HAXEPATH
-  #       run: |
-  #         echo "HAXEPATH=$Env:HAXE_STD_PATH\.." >> $Env:GITHUB_ENV
-  #     - name: Install Haxe dependencies
-  #       run: |
-  #         haxelib install hxcpp --quiet
-  #         haxelib install format --quiet
+      - name: Set HAXEPATH
+        run: echo "HAXEPATH=$Env:HAXE_STD_PATH\.." >> $Env:GITHUB_ENV
+
+      - name: Install Haxe dependencies
+        run: |
+          haxelib install hxcpp --quiet
+          haxelib install format 3.5.0 --quiet
+
+      - name: Build Aeons Atlas
+        run: haxe build-windows.hxml
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: AeonsAtlas
+          path: build\windows\AeonsAtlas.exe
+          if-no-files-found: error
