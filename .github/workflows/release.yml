@@ -124,6 +124,6 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           files: |
-            AeonsAtlasWin.exe/AeonsAtlasWin.exe
-            AeonsAtlasMac/AeonsAtlasMac
-            AeonsAtlasLinux/AeonsAtlasLinux
+            AeonsAtlas-Windows/AeonsAtlasWin.exe
+            AeonsAtlas-MacOS/AeonsAtlasMac
+            AeonsAtlas-Linux/AeonsAtlasLinux
