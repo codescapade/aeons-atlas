@@ -49,7 +49,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: AeonsAtlas-Windows
-          path: build\windows\AeonsAtlas.exe
+          path: build\windows\AeonsAtlasWin.exe
           if-no-files-found: error
 
   build-macos:
@@ -76,7 +76,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: AeonsAtlas-MacOS
-          path: build/macos/AeonsAtlas
+          path: build/macos/AeonsAtlasMac
           if-no-files-found: error
 
 
@@ -104,5 +104,5 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: AeonsAtlas-Linux
-          path: build/linux/AeonsAtlas
+          path: build/linux/AeonsAtlasMac
           if-no-files-found: error
