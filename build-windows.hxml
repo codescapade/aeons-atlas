@@ -8,4 +8,4 @@
 
 --dce full
 
--D HAXE_OUTPUT_FILE=AeonsAtlas
+-D HAXE_OUTPUT_FILE=AeonsAtlasWin

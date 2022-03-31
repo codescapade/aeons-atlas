@@ -59,10 +59,49 @@ This is an example of a config file:
 ```
 
 ## The output data json file
-The data file for the atlas has the same format as the basic json export in texturepacker so it is easy to integrate with other software that reads image atlases.
+The data file for the atlas has the same format as the basic json export in texturepacker so it is easy to integrate with other software that reads image atlases.  
+This is an example of the output file:
+
+``` json
+{
+  "frames": [
+    {
+      "rotated": false,
+      "sourceSize": {
+        "h": 46,
+        "w": 48
+      },
+      "filename": "blue_box",
+      "spriteSourceSize": {
+        "h": 46,
+        "w": 48,
+        "x": 0,
+        "y": 0
+      },
+      "frame": {
+        "h": 46,
+        "w": 48,
+        "x": 0,
+        "y": 0
+      },
+      "trimmed": false
+    }
+  ]
+}
+```
 
 ## Examples
 You can see examples of the atlas config and output in the example folder.
 
 ## Limitations
 A the moment only 32-bit png images are supported. 
+
+## Release builds
+For MacOS and Linux if you download the release file you have to make it executable first.
+The Linux release is built on Ubuntu. You have to build from source for other versions.
+
+## Building from source
+- Clone this repository.
+- Install (Haxe)[https://haxe.org]. I build this with 4.2.5.
+- Install the `format` library using `haxelib install format`. I build this with 3.5.0.
+- Run `haxe build-windows.hxml` or one of the other platforms that have a .hxml file in the root.
