@@ -102,6 +102,6 @@ The Linux release is built on Ubuntu. You have to build from source for other ve
 
 ## Building from source
 - Clone this repository.
-- Install (Haxe)[https://haxe.org]. I build this with 4.2.5.
+- Install [Haxe](https://haxe.org). I build this with 4.2.5.
 - Install the `format` library using `haxelib install format`. I build this with 3.5.0.
-- Run `haxe build-windows.hxml` or one of the other platforms that have a .hxml file in the root.
+- Run `haxe build-windows.hxml` or one of the other platforms that have a .hxml file in the root folder of the project.
