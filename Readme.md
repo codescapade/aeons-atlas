@@ -4,7 +4,7 @@ Aeons atlas is a command line image atlas packing tool. It combines multiple ima
 
 This tool is being used in the [Aeons Game Engine](https://github.com/codescapade/aeons) to automatically create atlas files when building a game, but it can be used on its own as well.
 
-## How to use Aeons AtlaS
+## How to use Aeons Atlas
 This tool uses a `atlas.json` config file to generate an image atlas. You can run the executable directly inside a folder with a `atlas.json` file without ady arguments or provide a folder containing the file as an argument.
 
 for example: `AeonsAtlas projectFolder/atlasFiles`
