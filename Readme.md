@@ -93,9 +93,6 @@ This is an example of the output file:
 ## Examples
 You can see examples of the atlas config and output in the example folder.
 
-## Limitations
-A the moment only 32-bit png images are supported. 
-
 ## Release builds
 For MacOS and Linux if you download the release file you have to make it executable first.
 The Linux release is built on Ubuntu. You have to build from source for other versions.
@@ -103,5 +100,5 @@ The Linux release is built on Ubuntu. You have to build from source for other ve
 ## Building from source
 - Clone this repository.
 - Install [Haxe](https://haxe.org). I build this with 4.2.5.
-- Install the `format` library using `haxelib install format`. I build this with 3.5.0.
+- Install the `format` library using `haxelib format https://github.com/codescapade/format`. I build this with my git version [https://github.com/codescapade/format](https://github.com/codescapade/format) that fixes converting indexed pngs with lower than 4 bit depth.
 - Run `haxe build-windows.hxml` or one of the other platforms that have a .hxml file in the root folder of the project.

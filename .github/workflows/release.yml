@@ -20,7 +20,7 @@ jobs:
 
       - name: Install Haxe dependencies
         run: |
-          haxelib install format 3.5.0 --quiet
+          haxelib git format https://github.com/codescapade/format --quiet
           haxelib install buddy 2.13.0 --quiet
 
       - name: Run Tests
@@ -42,7 +42,7 @@ jobs:
       - name: Install Haxe dependencies
         run: |
           haxelib install hxcpp --quiet
-          haxelib install format 3.5.0 --quiet
+          haxelib git format https://github.com/codescapade/format --quiet
 
       - name: Build Aeons Atlas
         run: haxe build-windows.hxml
@@ -69,7 +69,7 @@ jobs:
       - name: Install Haxe dependencies
         run: |
           haxelib install hxcpp --quiet
-          haxelib install format 3.5.0 --quiet
+          haxelib git format https://github.com/codescapade/format --quiet
 
       - name: Build Aeons Atlas
         run: haxe build-macos.hxml
@@ -97,7 +97,7 @@ jobs:
       - name: Install Haxe dependencies
         run: |
           haxelib install hxcpp --quiet
-          haxelib install format 3.5.0 --quiet
+          haxelib git format https://github.com/codescapade/format --quiet
 
       - name: Build Aeons Atlas
         run: haxe build-linux.hxml
