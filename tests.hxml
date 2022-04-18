@@ -1,7 +1,7 @@
 -cp source
 -cp tests
 
--lib format:3.5.0
+-lib format:git
 -lib buddy:2.13.0
 
 -D unit_testing
