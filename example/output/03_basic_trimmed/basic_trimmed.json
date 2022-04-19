@@ -2,16 +2,11 @@
   "frames": [
     {
       "rotated": false,
-      "sourceSize": {
-        "h": 46,
-        "w": 48
-      },
-      "filename": "blue_box",
       "spriteSourceSize": {
         "h": 46,
         "w": 48,
-        "x": 0,
-        "y": 0
+        "x": 6,
+        "y": 5
       },
       "frame": {
         "h": 36,
@@ -19,20 +14,20 @@
         "x": 0,
         "y": 0
       },
-      "trimmed": true
+      "trimmed": true,
+      "sourceSize": {
+        "h": 46,
+        "w": 48
+      },
+      "filename": "blue_box"
     },
     {
       "rotated": false,
-      "sourceSize": {
-        "h": 90,
-        "w": 70
-      },
-      "filename": "green_box",
       "spriteSourceSize": {
         "h": 90,
         "w": 70,
-        "x": 0,
-        "y": 0
+        "x": 16,
+        "y": 11
       },
       "frame": {
         "h": 72,
@@ -40,20 +35,20 @@
         "x": 36,
         "y": 0
       },
-      "trimmed": true
+      "trimmed": true,
+      "sourceSize": {
+        "h": 90,
+        "w": 70
+      },
+      "filename": "green_box"
     },
     {
       "rotated": false,
-      "sourceSize": {
-        "h": 72,
-        "w": 54
-      },
-      "filename": "orange_box",
       "spriteSourceSize": {
         "h": 72,
         "w": 54,
-        "x": 0,
-        "y": 0
+        "x": 19,
+        "y": 4
       },
       "frame": {
         "h": 64,
@@ -61,20 +56,20 @@
         "x": 72,
         "y": 0
       },
-      "trimmed": true
+      "trimmed": true,
+      "sourceSize": {
+        "h": 72,
+        "w": 54
+      },
+      "filename": "orange_box"
     },
     {
       "rotated": false,
-      "sourceSize": {
-        "h": 34,
-        "w": 66
-      },
-      "filename": "purple_box",
       "spriteSourceSize": {
         "h": 34,
         "w": 66,
-        "x": 0,
-        "y": 0
+        "x": 8,
+        "y": 12
       },
       "frame": {
         "h": 12,
@@ -82,20 +77,20 @@
         "x": 90,
         "y": 0
       },
-      "trimmed": true
+      "trimmed": true,
+      "sourceSize": {
+        "h": 34,
+        "w": 66
+      },
+      "filename": "purple_box"
     },
     {
       "rotated": false,
-      "sourceSize": {
-        "h": 64,
-        "w": 96
-      },
-      "filename": "red_box",
       "spriteSourceSize": {
         "h": 64,
         "w": 96,
-        "x": 0,
-        "y": 0
+        "x": 13,
+        "y": 10
       },
       "frame": {
         "h": 48,
@@ -103,20 +98,20 @@
         "x": 138,
         "y": 0
       },
-      "trimmed": true
+      "trimmed": true,
+      "sourceSize": {
+        "h": 64,
+        "w": 96
+      },
+      "filename": "red_box"
     },
     {
       "rotated": false,
-      "sourceSize": {
-        "h": 100,
-        "w": 86
-      },
-      "filename": "yellow_box",
       "spriteSourceSize": {
         "h": 100,
         "w": 86,
-        "x": 0,
-        "y": 0
+        "x": 7,
+        "y": 33
       },
       "frame": {
         "h": 52,
@@ -124,7 +119,12 @@
         "x": 210,
         "y": 0
       },
-      "trimmed": true
+      "trimmed": true,
+      "sourceSize": {
+        "h": 100,
+        "w": 86
+      },
+      "filename": "yellow_box"
     }
   ]
 }

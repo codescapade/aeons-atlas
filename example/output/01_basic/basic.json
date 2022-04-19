@@ -2,11 +2,6 @@
   "frames": [
     {
       "rotated": false,
-      "sourceSize": {
-        "h": 46,
-        "w": 48
-      },
-      "filename": "blue_box",
       "spriteSourceSize": {
         "h": 46,
         "w": 48,
@@ -19,15 +14,15 @@
         "x": 0,
         "y": 0
       },
-      "trimmed": false
+      "trimmed": false,
+      "sourceSize": {
+        "h": 46,
+        "w": 48
+      },
+      "filename": "blue_box"
     },
     {
       "rotated": false,
-      "sourceSize": {
-        "h": 90,
-        "w": 70
-      },
-      "filename": "green_box",
       "spriteSourceSize": {
         "h": 90,
         "w": 70,
@@ -40,15 +35,15 @@
         "x": 48,
         "y": 0
       },
-      "trimmed": false
+      "trimmed": false,
+      "sourceSize": {
+        "h": 90,
+        "w": 70
+      },
+      "filename": "green_box"
     },
     {
       "rotated": false,
-      "sourceSize": {
-        "h": 72,
-        "w": 54
-      },
-      "filename": "orange_box",
       "spriteSourceSize": {
         "h": 72,
         "w": 54,
@@ -61,15 +56,15 @@
         "x": 118,
         "y": 0
       },
-      "trimmed": false
+      "trimmed": false,
+      "sourceSize": {
+        "h": 72,
+        "w": 54
+      },
+      "filename": "orange_box"
     },
     {
       "rotated": false,
-      "sourceSize": {
-        "h": 34,
-        "w": 66
-      },
-      "filename": "purple_box",
       "spriteSourceSize": {
         "h": 34,
         "w": 66,
@@ -82,15 +77,15 @@
         "x": 172,
         "y": 0
       },
-      "trimmed": false
+      "trimmed": false,
+      "sourceSize": {
+        "h": 34,
+        "w": 66
+      },
+      "filename": "purple_box"
     },
     {
       "rotated": false,
-      "sourceSize": {
-        "h": 64,
-        "w": 96
-      },
-      "filename": "red_box",
       "spriteSourceSize": {
         "h": 64,
         "w": 96,
@@ -103,15 +98,15 @@
         "x": 238,
         "y": 0
       },
-      "trimmed": false
+      "trimmed": false,
+      "sourceSize": {
+        "h": 64,
+        "w": 96
+      },
+      "filename": "red_box"
     },
     {
       "rotated": false,
-      "sourceSize": {
-        "h": 100,
-        "w": 86
-      },
-      "filename": "yellow_box",
       "spriteSourceSize": {
         "h": 100,
         "w": 86,
@@ -124,7 +119,12 @@
         "x": 334,
         "y": 0
       },
-      "trimmed": false
+      "trimmed": false,
+      "sourceSize": {
+        "h": 100,
+        "w": 86
+      },
+      "filename": "yellow_box"
     }
   ]
 }
