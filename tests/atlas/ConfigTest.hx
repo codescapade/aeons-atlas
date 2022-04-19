@@ -1,7 +1,8 @@
 package atlas;
 
-import atlas.Config;
 import buddy.BuddySuite;
+
+import atlas.Config;
 
 using buddy.Should;
 

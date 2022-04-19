@@ -28,6 +28,16 @@ class Image {
   public var extrude(default, null): Int;
 
   /**
+   * Trimmed x offset in pixels.
+   */
+  public var sourceX(default, null): Int;
+
+  /**
+   * Trimmed y offset in pixels.
+   */
+  public var sourceY(default, null): Int;
+
+  /**
    * The original image width before trimming and extruding in pixels.
    */
   public var sourceWidth(default, null): Int;
@@ -255,6 +265,8 @@ class Image {
         pos += stride;
       }
     }
+    sourceX = leftOffset;
+    sourceY = topOffset;
   }
 
   /**

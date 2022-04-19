@@ -1,6 +1,7 @@
 package atlas;
 
 import haxe.io.Bytes;
+
 import buddy.BuddySuite;
 
 using buddy.Should;

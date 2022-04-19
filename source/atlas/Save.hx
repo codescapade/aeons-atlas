@@ -48,8 +48,8 @@ class Save {
         rotated: false,
         trimmed: image.trimmed,
         spriteSourceSize: {
-          x: 0,
-          y: 0,
+          x: image.sourceX,
+          y: image.sourceY,
           w: image.sourceWidth,
           h: image.sourceHeight
         },
