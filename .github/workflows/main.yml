@@ -109,7 +109,7 @@ jobs:
         run: haxe build-linux.hxml
 
       - name: Make executable
-        run: chmod +x build/macos/AeonsAtlasLinux
+        run: chmod +x build/linux/AeonsAtlasLinux
 
       - uses: actions/upload-artifact@v2
         with:
