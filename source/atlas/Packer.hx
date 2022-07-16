@@ -220,11 +220,11 @@ class Packer {
    * Reset for a new pass.
    */
   function resetPlacements() {
-      placedRects = [];
-      placed = 0;
-      grid = [[false]];
-      gridColumns = [bounds.width];
-      gridRows = [bounds.height];
+    placedRects = [];
+    placed = 0;
+    grid = [[false]];
+    gridColumns = [bounds.width];
+    gridRows = [bounds.height];
   }
 
   /**
@@ -286,7 +286,7 @@ class Packer {
       }
 
       endRow++;
-      if  (endRow < gridRows.length) {
+      if (endRow < gridRows.length) {
         totalHeight += gridRows[endRow];
       }
     }
@@ -333,8 +333,8 @@ class Packer {
    * @param endRow The end row index.
    * @param rect The rectangle to insert.
    */
-  function insertRect(totalWidth: Int, totalHeight: Int, startColumn: Int, startRow: Int, endColumn: Int,
-      endRow: Int, rect: Rect) {
+  function insertRect(totalWidth: Int, totalHeight: Int, startColumn: Int, startRow: Int, endColumn: Int, endRow: Int,
+      rect: Rect) {
     final widthLeft = totalWidth - rect.width;
     final heightLeft = totalHeight - rect.height;
 

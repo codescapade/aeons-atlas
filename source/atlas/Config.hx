@@ -65,16 +65,16 @@ typedef Config = {
 /**
  * Helper to load the configs from the json file.
  */
-typedef ConfigData = {
-  var configs: Array<Config>;
+typedef AtlasConfig = {
+  var atlas: Array<Config>;
 }
 
 /**
  * Set default values for each config for the optional fields if they are null.
  * @param data All configs.
  */
-function setDefaultConfigValues(data: ConfigData) {
-  for (config in data.configs) {
+function setDefaultConfigValues(data: AtlasConfig) {
+  for (config in data.atlas) {
     if (config.folders == null) {
       config.folders = [];
     }

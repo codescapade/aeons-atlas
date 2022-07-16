@@ -2,13 +2,13 @@ package atlas;
 
 import haxe.Json;
 import haxe.io.Path;
+
 import sys.io.File;
 
 /**
  * Helper class to save the image and json data of the atlas.
  */
 class Save {
-
   /**
    * Save the atlas image to a png file.
    * @param name The name of the file.

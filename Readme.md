@@ -5,14 +5,14 @@ Aeons atlas is a command line image atlas packing tool. It combines multiple ima
 This tool is being used in the [Aeons Game Engine](https://github.com/codescapade/aeons) to automatically create atlas files when building a game, but it can be used on its own as well.
 
 ## How to use Aeons Atlas
-This tool uses a `atlas.json` config file to generate an image atlas. You can run the executable directly inside a folder with a `atlas.json` file without ady arguments or provide a folder containing the file as an argument.
+This tool uses a `toml` config file to generate an image atlas. You can run the executable directly inside a folder with a `atlas.toml` file without any arguments or provide a .toml file as an argument.
 
-for example: `AeonsAtlas projectFolder/atlasFiles`
+for example: `AeonsAtlas projectFolder/atlasFiles/atlas.toml`
 
-## The atlas.json schema
+## The toml schema
 The atlas config file can contain multiple configurations so you can generate multiple atlases at the same time.
 
-The root of the file is a "configs" array that holds the separate configs.  
+Configs are in an [[atlas]] table array that holds the separate configs.  
 The following config options are available:
 
 - `name`: `String`. The name of the output files.
@@ -32,30 +32,25 @@ The following config options are available:
 
 The `saveFolder`, `files` and `folders` paths should be relative to the config file.   
 This is an example of a config file:
-``` json
-{
-  "configs": [
-    {
-      "name": "basic",
-      "saveFolder": "output/01_basic",
-      "folders": [
-        "images",
-        "otherImages/pictures"
-      ],
-      "files": [
-        "myFile.png",
-        "myImageFolder/myImage.png"
-      ],
-      "trimmed": false,
-      "extrude": 1,
-      "packMethod": "basic",
-      "folderInName": true,
-      "maxWidth": 1024,
-      "maxHeight": 1024,
-      "noData": false
-    }
-  ]
-}
+``` toml
+[[atlas]]
+name = "basic"
+saveFolder = "output/01_basic"
+folders = [
+  "images",
+  "otherImages/pictures"
+]
+files = [
+  "myFile.png",
+  "myImageFolder/myImage.png"
+]
+trimmed = false
+extrude = 1
+packMethod = "basic"
+folderInName = true
+maxWidth = 1024
+maxHeight = 1024
+noData = false
 ```
 
 ## The output data json file
@@ -100,5 +95,6 @@ The Linux release is built on Ubuntu. You have to build from source for other ve
 ## Building from source
 - Clone this repository.
 - Install [Haxe](https://haxe.org). I build this with 4.2.5.
-- Install the `format` library using `haxelib format https://github.com/codescapade/format`. I build this with my git version [https://github.com/codescapade/format](https://github.com/codescapade/format) that fixes converting indexed pngs with lower than 4 bit depth.
+- Install the `format` library using `haxelib git format https://github.com/codescapade/format`. I build this with my git version [https://github.com/codescapade/format](https://github.com/codescapade/format) that fixes converting indexed pngs with lower than 4 bit depth.
+- Install the `haxetoml` library using `haxelib git haxetoml https://github.com/codescapade/haxetoml`.
 - Run `haxe build-windows.hxml` or one of the other platforms that have a .hxml file in the root folder of the project.

@@ -5,7 +5,6 @@ import buddy.BuddySuite;
 using buddy.Should;
 
 class AtlasTest extends BuddySuite {
-
   public function new() {
     describe('Atlas', {
       var config: Config;
@@ -14,9 +13,7 @@ class AtlasTest extends BuddySuite {
         config = {
           name: 'test',
           saveFolder: 'tests/out',
-          folders: [
-            'tests/testFiles'
-          ],
+          folders: ['tests/testFiles'],
           trimmed: true,
           extrude: 1
         }
@@ -36,7 +33,7 @@ class AtlasTest extends BuddySuite {
 
         final atlas = new Atlas(config);
         final success = atlas.pack();
-        
+
         success.should.be(true);
         for (rect in atlas.packedRects) {
           rect.name.should.startWith('testFiles_');

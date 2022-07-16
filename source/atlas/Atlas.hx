@@ -1,6 +1,7 @@
 package atlas;
 
 import haxe.io.Path;
+
 import sys.FileSystem;
 
 /**

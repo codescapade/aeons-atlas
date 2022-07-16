@@ -1,13 +1,12 @@
 package atlas;
 
-import haxe.io.Bytes;
-
 import buddy.BuddySuite;
+
+import haxe.io.Bytes;
 
 using buddy.Should;
 
 class ImageTest extends BuddySuite {
-
   public function new() {
     describe('Image', {
       it('Should construct an empty image.', () -> {
@@ -101,7 +100,7 @@ class ImageTest extends BuddySuite {
         final path = 'tests/testFiles/blue_box.png';
         final image = Image.fromFile(path, false, 0);
         final darkBlue = new Color(255, 68, 132, 159);
-        
+
         image.width.should.be(48);
         image.height.should.be(46);
 
@@ -121,7 +120,7 @@ class ImageTest extends BuddySuite {
         image.sourceWidth.should.be(66);
         image.sourceHeight.should.be(34);
       });
-      
+
       it('Should extrude an image.', () -> {
         final path = 'tests/testFiles/purple_box.png';
         final image = Image.fromFile(path, true, 1);
@@ -136,14 +135,14 @@ class ImageTest extends BuddySuite {
           for (x in 0...image.width) {
             var color = image.getPixel(x, y);
             // Transparent corners when extruding 1 pixel.
-            if ((x == 0 && (y == 0 || y == image.height - 1)) || (x == image.width - 1 && (y == 0 ||
-                y == image.height - 1))) {
+            if ((x == 0 && (y == 0 || y == image.height - 1))
+              || (x == image.width - 1 && (y == 0 || y == image.height - 1))) {
               color.equals(transparent).should.be(true);
-            // Dark borders 2 pixels wide because of the extrusion.
-            } else if (x == 0 || x == 1 || x == image.width - 1 || x == image.width - 2 || y == 0 || y == 1 ||
-                y == image.height - 1 || y == image.height - 2) {
+              // Dark borders 2 pixels wide because of the extrusion.
+            } else if (x == 0 || x == 1 || x == image.width - 1 || x == image.width - 2 || y == 0 || y == 1
+              || y == image.height - 1 || y == image.height - 2) {
               color.equals(darkPurple).should.be(true);
-            // The rest is the normal purple color.
+              // The rest is the normal purple color.
             } else {
               color.equals(normalPurple).should.be(true);
             }

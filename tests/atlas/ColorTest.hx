@@ -5,7 +5,6 @@ import buddy.BuddySuite;
 using buddy.Should;
 
 class ColorTest extends BuddySuite {
-  
   public function new() {
     describe('Color', {
       it('Should construct a color.', () -> {

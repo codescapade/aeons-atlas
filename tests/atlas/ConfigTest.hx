@@ -1,23 +1,22 @@
 package atlas;
 
-import buddy.BuddySuite;
-
 import atlas.Config;
+
+import buddy.BuddySuite;
 
 using buddy.Should;
 
 class ConfigTest extends BuddySuite {
-  
   public function new() {
     describe('Config', {
-      it('Should set default values.', () ->  {
+      it('Should set default values.', () -> {
         var config: Config = {
           name: 'Test',
           saveFolder: 'out',
         };
 
-        var data: ConfigData = {
-          configs: [config]
+        var data: AtlasConfig = {
+          atlas: [config]
         };
         setDefaultConfigValues(data);
 

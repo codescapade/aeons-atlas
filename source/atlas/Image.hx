@@ -1,6 +1,7 @@
 package atlas;
 
 import haxe.io.Bytes;
+
 import sys.io.File;
 
 /**
@@ -30,12 +31,12 @@ class Image {
   /**
    * Trimmed x offset in pixels.
    */
-  public var sourceX(default, null): Int;
+  public var sourceX(default, null): Int = 0;
 
   /**
    * Trimmed y offset in pixels.
    */
-  public var sourceY(default, null): Int;
+  public var sourceY(default, null): Int = 0;
 
   /**
    * The original image width before trimming and extruding in pixels.

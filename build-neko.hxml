@@ -1,4 +1,5 @@
 -lib format:git
+-lib haxetoml:git
 
 -cp source
 

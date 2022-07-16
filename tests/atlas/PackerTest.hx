@@ -5,7 +5,6 @@ import buddy.BuddySuite;
 using buddy.Should;
 
 class PackerTest extends BuddySuite {
-
   public function new() {
     describe('Packer', {
       var config: Config;
@@ -15,9 +14,7 @@ class PackerTest extends BuddySuite {
         config = {
           name: 'test',
           saveFolder: 'tests/out',
-          folders: [
-            'tests/testFiles'
-          ],
+          folders: ['tests/testFiles'],
           extrude: 0,
           trimmed: true
         };

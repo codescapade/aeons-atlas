@@ -2,6 +2,7 @@
 -cp tests
 
 -lib format:git
+-lib haxetoml:git
 -lib buddy:2.13.0
 
 -D unit_testing

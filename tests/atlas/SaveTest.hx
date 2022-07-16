@@ -1,20 +1,18 @@
 package atlas;
 
+import buddy.BuddySuite;
+
 import haxe.Json;
 import haxe.io.Path;
-import sys.io.File;
-import sys.FileSystem;
 
-import buddy.BuddySuite;
+import sys.FileSystem;
+import sys.io.File;
 
 using buddy.Should;
 
-
 class SaveTest extends BuddySuite {
-
   public function new() {
     describe('Save', {
-
       var config: Config;
 
       var savedFrames: Array<Frame>;
@@ -23,9 +21,7 @@ class SaveTest extends BuddySuite {
         config = {
           name: 'test',
           saveFolder: 'tests/out',
-          folders: [
-            'tests/testFiles'
-          ],
+          folders: ['tests/testFiles'],
           trimmed: true,
           extrude: 1,
           maxWidth: 4096,
@@ -217,11 +213,19 @@ class SaveTest extends BuddySuite {
   }
 
   static function framesEqual(a: Frame, b: Frame): Bool {
-    return a.filename == b.filename && a.rotated == b.rotated && a.sourceSize.w == b.sourceSize.w &&
-        a.sourceSize.h == b.sourceSize.h && a.frame.x == b.frame.x && a.frame.y == b.frame.y &&
-        a.frame.w == b.frame.w && a.frame.h == b.frame.h && a.trimmed == b.trimmed &&
-        a.spriteSourceSize.x == b.spriteSourceSize.x && a.spriteSourceSize.y == b.spriteSourceSize.y &&
-        a.spriteSourceSize.w == b.spriteSourceSize.w && a.spriteSourceSize.h == b.spriteSourceSize.h;
+    return a.filename == b.filename
+      && a.rotated == b.rotated
+      && a.sourceSize.w == b.sourceSize.w
+      && a.sourceSize.h == b.sourceSize.h
+      && a.frame.x == b.frame.x
+      && a.frame.y == b.frame.y
+      && a.frame.w == b.frame.w
+      && a.frame.h == b.frame.h
+      && a.trimmed == b.trimmed
+      && a.spriteSourceSize.x == b.spriteSourceSize.x
+      && a.spriteSourceSize.y == b.spriteSourceSize.y
+      && a.spriteSourceSize.w == b.spriteSourceSize.w
+      && a.spriteSourceSize.h == b.spriteSourceSize.h;
   }
 }
 

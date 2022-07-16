@@ -1,4 +1,5 @@
 -L format:git
+-L haxetoml:git
 
 -cp source
 
