@@ -76,6 +76,9 @@ jobs:
       - name: Build Aeons Atlas
         run: haxe build-macos.hxml
 
+      - name: Make executable
+        run: chmod +x build/macos/AeonsAtlasMac
+
       - uses: actions/upload-artifact@v2
         with:
           name: AeonsAtlas-MacOS
@@ -104,6 +107,9 @@ jobs:
 
       - name: Build Aeons Atlas
         run: haxe build-linux.hxml
+
+      - name: Make executable
+        run: chmod +x build/macos/AeonsAtlasLinux
 
       - uses: actions/upload-artifact@v2
         with:
